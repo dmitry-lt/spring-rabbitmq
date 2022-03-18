@@ -8,7 +8,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 public class RabbitMqServiceUnitTests {
     @Test
-    public void givenRabbitMqService_whenMessageSent_thenTemplateSend() {
+    public void givenRabbitMqService_whenSendMessage_thenConvertAndSend() {
         // given
         var topicExchangeName = "exchange";
         var routingKeyBase = "routing.key";

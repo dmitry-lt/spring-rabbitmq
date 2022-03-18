@@ -34,7 +34,7 @@ public class RabbitMqServiceIntegrationTests {
     RabbitMqService rabbitMqService;
 
     @Test
-    public void testSendMessageToTestQueue() throws InterruptedException {
+    public void testSendMessageToTemporaryQueue() throws InterruptedException {
         // set up
         AmqpAdmin admin = new RabbitAdmin(connectionFactory);
 
