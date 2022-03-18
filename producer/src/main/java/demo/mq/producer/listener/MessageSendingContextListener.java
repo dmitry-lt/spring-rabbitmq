@@ -1,6 +1,6 @@
-package demo.rabbitmq.producer.listener;
+package demo.mq.producer.listener;
 
-import demo.rabbitmq.producer.service.RabbitMqService;
+import demo.mq.producer.service.MessageSendingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,18 +9,18 @@ import javax.servlet.ServletContextListener;
 import java.time.LocalDateTime;
 
 @Component
-public class RabbitMqServletContextListener implements ServletContextListener {
+public class MessageSendingContextListener implements ServletContextListener {
 
     @Autowired
-    private RabbitMqService rabbitMqService;
+    private MessageSendingService messageSendingService;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        rabbitMqService.sendMessage("Producer started at " + LocalDateTime.now());
+        messageSendingService.sendMessage("Producer started at " + LocalDateTime.now());
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        rabbitMqService.sendMessage("Producer shut down at " + LocalDateTime.now());
+        messageSendingService.sendMessage("Producer shut down at " + LocalDateTime.now());
     }
 }

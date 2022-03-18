@@ -1,5 +1,6 @@
-package demo.rabbitmq.producer.service;
+package demo.mq.producer.service.rabbitmq;
 
+import demo.mq.producer.service.MessageSendingService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,16 +9,17 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
-public class RabbitMqService {
-    @Value("${rabbitmq.topic-exchange-name}")
+public class RabbitMqService implements MessageSendingService {
+    @Value("${mq.topic-exchange-name}")
     private String topicExchangeName;
 
-    @Value("${rabbitmq.routing-key-base}")
+    @Value("${mq.routing-key-base}")
     private String routingKey;
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    @Override
     public void sendMessage(String message) {
         log.info("Sending message: " + message);
         rabbitTemplate.convertAndSend(topicExchangeName, routingKey, message);
