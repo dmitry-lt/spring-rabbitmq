@@ -32,3 +32,12 @@ cd consumer
 gradlew bootRun
 ```
 
+### Description
+
+This sample uses a topic exchange. More on exchange types: https://www.rabbitmq.com/tutorials/amqp-concepts.html#exchanges
+The topic exchange is bound to a queue, which is listened by consumer
+
+At startup, producer sends a message saying that it started
+
+#### Notes
+For demo purposes, producer creates topic exchange, queue and binding between them. In a real world application this logic can be decoupled from producer
