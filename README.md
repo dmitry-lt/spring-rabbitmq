@@ -16,6 +16,7 @@ Must be installed locally
 `docker-compose up`
 
 RabbiMQ Management console will be available at http://localhost:15672/
+
 Username / password: guest / guest
 
 #### To start producer
