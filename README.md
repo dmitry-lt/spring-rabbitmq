@@ -40,4 +40,6 @@ The topic exchange is bound to a queue, which is listened by consumer
 At startup, producer sends a message saying that it started
 
 #### Notes
-For demo purposes, producer creates topic exchange, queue and binding between them. In a real world application this logic can be decoupled from producer
+For demo purposes, there are certain limitations:
+* Producer creates topic exchange, queue and binding between them. In a real world application this logic can be decoupled from producer
+* Producer won't start if RabbitMQ is not started

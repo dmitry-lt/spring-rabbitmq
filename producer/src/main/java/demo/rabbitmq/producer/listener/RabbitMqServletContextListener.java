@@ -1,6 +1,7 @@
 package demo.rabbitmq.producer.listener;
 
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -10,7 +11,7 @@ import javax.servlet.ServletContextListener;
 import java.time.LocalDateTime;
 
 @Component
-public class RabbitMqServletContextListener implements ServletContextListener {
+public class RabbitMqServletContextListener implements ServletContextListener, DisposableBean {
     @Value("${rabbitmq.topic-exchange-name}")
     private String topicExchangeName;
 
@@ -27,7 +28,7 @@ public class RabbitMqServletContextListener implements ServletContextListener {
     }
 
     @Override
-    public void contextDestroyed(ServletContextEvent sce) {
+    public void destroy() {
         rabbitTemplate.convertAndSend(topicExchangeName, routingKey,
                 "Producer shut down at " + LocalDateTime.now());
     }
