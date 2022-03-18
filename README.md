@@ -11,9 +11,24 @@ Must be installed locally
 
 ### Local run
 
-Run to start RabbitMQ docker container
+#### To start RabbitMQ docker container
 
 `docker-compose up`
 
 RabbiMQ Management console will be available at http://localhost:15672/
 Username / password: guest / guest
+
+#### To start producer
+
+```
+cd producer
+gradlew bootRun
+```
+
+#### To start consumer
+
+```
+cd consumer
+gradlew bootRun
+```
+
