@@ -48,3 +48,7 @@ Later on, producer sends a message if it is pinged
 For demo purposes, there are certain limitations:
 * Producer creates topic exchange, queue and binding between them. In a real world application this logic can be decoupled from producer
 * Start order matters: first RabbitMQ, then producer, then consumer
+
+#### Possible improvements
+* Add tests
+* Support starting in any order
