@@ -1,6 +1,8 @@
 package demo.mq.producer.config;
 
 import demo.mq.producer.listener.MessageSendingContextListener;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -14,19 +16,11 @@ import org.springframework.context.annotation.Configuration;
 import javax.servlet.ServletContextListener;
 
 @Configuration
-public class ApmqConfig {
-
-    @Value("${mq.topic-exchange-name}")
-    private String topicExchangeName;
-
-    @Value("${mq.queue-name}")
-    private String queueName;
-
-    @Value("${mq.routing-key-base}")
-    private String routingKeyBase;
-
-    @Autowired
-    private MessageSendingContextListener messageSendingContextListener;
+@Getter
+@RequiredArgsConstructor
+public class AmqpConfig {
+    private final AmqpProperties amqpProperties;
+    private final MessageSendingContextListener messageSendingContextListener;
 
     @Bean
     ServletListenerRegistrationBean<ServletContextListener> servletListener() {
@@ -37,16 +31,16 @@ public class ApmqConfig {
 
     @Bean
     Queue queue() {
-        return new Queue(queueName, false);
+        return new Queue(amqpProperties.getQueueName(), false);
     }
 
     @Bean
     TopicExchange exchange() {
-        return new TopicExchange(topicExchangeName);
+        return new TopicExchange(amqpProperties.getTopicExchangeName());
     }
 
     @Bean
     Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with(routingKeyBase + ".#");
+        return BindingBuilder.bind(queue).to(exchange).with(amqpProperties.getRoutingKeyBase() + ".#");
     }
 }
