@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 public class RabbitMqServiceIntegrationTests {
-    private final String queueName = "producerIntegrationTestQueue-" + System.currentTimeMillis();
+    private final String queueName = "producer-integration-test-queue-" + System.currentTimeMillis();
 
     @Autowired
     ConnectionFactory connectionFactory;

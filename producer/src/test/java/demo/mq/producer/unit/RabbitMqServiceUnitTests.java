@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 public class RabbitMqServiceUnitTests {
     @Test
     public void givenRabbitMqService_whenSendMessage_thenConvertAndSend() {
@@ -15,8 +18,8 @@ public class RabbitMqServiceUnitTests {
         var message = "test message";
 
         var propertiesMock = Mockito.mock(AmqpProperties.class);
-        Mockito.when(propertiesMock.getTopicExchangeName()).thenReturn(topicExchangeName);
-        Mockito.when(propertiesMock.getRoutingKeyBase()).thenReturn(routingKeyBase);
+        when(propertiesMock.getTopicExchangeName()).thenReturn(topicExchangeName);
+        when(propertiesMock.getRoutingKeyBase()).thenReturn(routingKeyBase);
 
         var rabbitTemplateMock = Mockito.mock(RabbitTemplate.class);
 
@@ -26,6 +29,6 @@ public class RabbitMqServiceUnitTests {
         rabbitMqService.sendMessage(message);
 
         // then
-        Mockito.verify(rabbitTemplateMock).convertAndSend(topicExchangeName, routingKeyBase, message);
+        verify(rabbitTemplateMock).convertAndSend(topicExchangeName, routingKeyBase, message);
     }
 }

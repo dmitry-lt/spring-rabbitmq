@@ -1,25 +1,24 @@
 package demo.mq.consumer.config;
 
 import demo.mq.consumer.receiver.MessageReceiver;
+import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@RequiredArgsConstructor
 public class RabbitMqConfig {
-
-    @Value("${mq.queue-name}")
-    private String queueName;
+    private final AmqpProperties amqpProperties;
 
     @Bean
     SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
                                              MessageListenerAdapter listenerAdapter) {
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory);
-        container.setQueueNames(queueName);
+        container.setQueueNames(amqpProperties.getQueueName());
         container.setMessageListener(listenerAdapter);
         return container;
     }
