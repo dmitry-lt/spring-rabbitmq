@@ -2,6 +2,7 @@ package demo.mq.producer.integration;
 
 import demo.mq.producer.config.AmqpProperties;
 import demo.mq.producer.service.rabbitmq.RabbitMqService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -33,9 +34,8 @@ public class RabbitMqServiceIntegrationTests {
     @Autowired
     RabbitMqService rabbitMqService;
 
-    @Test
-    public void testSendMessageToTemporaryQueue() throws InterruptedException {
-        // set up
+    @BeforeEach
+    void init() {
         AmqpAdmin admin = new RabbitAdmin(connectionFactory);
 
         // the server will delete the queue when it is no longer in use
@@ -43,8 +43,10 @@ public class RabbitMqServiceIntegrationTests {
         admin.declareQueue(queue);
         Binding binding = BindingBuilder.bind(queue).to(topicExchange).with(amqpProperties.getRoutingKeyBase() + ".#");
         admin.declareBinding(binding);
+    }
 
-        // test
+    @Test
+    public void testSendMessageToTemporaryQueue() throws InterruptedException {
         var message = "integration test message " + LocalDateTime.now();
         rabbitMqService.sendMessage(message);
 
