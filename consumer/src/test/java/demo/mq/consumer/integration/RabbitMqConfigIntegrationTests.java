@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
@@ -71,7 +69,7 @@ public class RabbitMqConfigIntegrationTests {
 
         amqpTemplate.convertAndSend(exchangeName, queueName, message);
 
-        verify(messageReceiverMock, timeout(10000)).receiveMessage(message);
+        verify(messageReceiverMock, timeout(10000)).handleMessage(message);
     }
 
 }

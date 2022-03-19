@@ -1,12 +1,14 @@
 package demo.mq.consumer.receiver;
 
-import org.springframework.stereotype.Component;
-import lombok.extern.slf4j.Slf4j;
+import java.io.Serializable;
+import java.util.Map;
 
-@Component
-@Slf4j
-public class MessageReceiver {
-    public void receiveMessage(String message) {
-        log.info("Message received: " + message);
-    }
+public interface MessageReceiver {
+    void handleMessage(String text);
+
+    void handleMessage(Map map);
+
+    void handleMessage(byte[] bytes);
+
+    void handleMessage(Serializable obj);
 }
