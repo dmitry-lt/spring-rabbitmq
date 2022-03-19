@@ -13,6 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 
@@ -22,6 +24,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
+@ActiveProfiles("test")
 public class RabbitMqConfigIntegrationTests {
     private static final String exchangeName = "consumer-integration-test-exchange-" + System.currentTimeMillis();
     private static final String queueName = "consumer-integration-test-queue-" + System.currentTimeMillis();
@@ -29,16 +32,14 @@ public class RabbitMqConfigIntegrationTests {
     @TestConfiguration
     static class ContextConfiguration {
         @Bean
-        @Primary
-        public AmqpProperties amqpPropertiesMock() {
+        public AmqpProperties amqpProperties() {
             var propertiesMock = mock(AmqpProperties.class);
             when(propertiesMock.getQueueName()).thenReturn(queueName);
             return propertiesMock;
         }
 
         @Bean
-        @Primary
-        public MessageReceiver messageReceiverMock() {
+        public MessageReceiver messageReceiver() {
             return mock(MessageReceiver.class);
         }
 
