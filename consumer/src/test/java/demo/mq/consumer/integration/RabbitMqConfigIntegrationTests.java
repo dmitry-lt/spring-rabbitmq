@@ -7,6 +7,7 @@ import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.Queue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -64,8 +65,26 @@ public class RabbitMqConfigIntegrationTests {
     MessageReceiver messageReceiverMock;
 
     @Test
+    public void testSendTextMessageToTemporaryExchange() {
+        var message = "integration test String " + LocalDateTime.now();
+
+        amqpTemplate.convertAndSend(exchangeName, queueName, message);
+
+        verify(messageReceiverMock, timeout(10000)).handleMessage(message);
+    }
+
+    @Test
     public void testSendMessageToTemporaryExchange() {
-        var message = "integration test message " + LocalDateTime.now();
+        var message = new Message(("integration test Message " + LocalDateTime.now()).getBytes());
+
+        amqpTemplate.send(exchangeName, queueName, message);
+
+        verify(messageReceiverMock, timeout(10000)).handleMessage(message.getBody());
+    }
+
+    @Test
+    public void testSendSerializableMessageToTemporaryExchange() {
+        var message = Integer.valueOf(42);
 
         amqpTemplate.convertAndSend(exchangeName, queueName, message);
 
