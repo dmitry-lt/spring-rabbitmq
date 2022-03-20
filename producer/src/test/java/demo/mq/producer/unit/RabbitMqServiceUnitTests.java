@@ -12,6 +12,10 @@ import static org.mockito.Mockito.when;
 public class RabbitMqServiceUnitTests {
     @Test
     public void givenRabbitMqService_whenSendMessage_thenConvertAndSend() {
+        // this unit test verifies that 
+        // rabbitMqService.sendMessage(message) does send the message 
+        // to the configured RabbitMQ exchange with the configured routing key
+        
         // given
         var topicExchangeName = "exchange";
         var routingKeyBase = "routing.key";
