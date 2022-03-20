@@ -1,6 +1,9 @@
 # spring-rabbitmq
 
-This sample demonstrates RabbitMQ producer and consumer Spring Boot applications
+This sample demonstrates:
+* RabbitMQ producer and consumer Spring Boot applications
+* unit and integration tests
+* code coverage with jacoco
 
 ### Prerequisites
 
