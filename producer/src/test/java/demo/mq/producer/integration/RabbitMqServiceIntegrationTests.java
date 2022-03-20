@@ -47,6 +47,11 @@ public class RabbitMqServiceIntegrationTests {
 
     @Test
     public void testSendMessageToTemporaryQueue() throws InterruptedException {
+        // This integration test verifies that 
+        // rabbitMqService.sendMessage(message) does send the message 
+        // to the configured RabbitMQ exchange with the configured routing key.
+        // Before running the test, we create a temporary queue that should receive the message
+        
         var message = "integration test message " + LocalDateTime.now();
         rabbitMqService.sendMessage(message);
 
