@@ -66,6 +66,10 @@ public class RabbitMqConfigIntegrationTests {
 
     @Test
     public void testSendTextMessageToTemporaryExchange() {
+        // This integration test verifies that 
+        // the consumer receives String type messages sent to the configured queue.
+        // Before running the test, we create a temporary exchange/queue/binding to send messages to
+        
         var message = "integration test String " + LocalDateTime.now();
 
         amqpTemplate.convertAndSend(exchangeName, queueName, message);
